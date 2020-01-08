@@ -28,7 +28,7 @@ class FindFiles:
         """
         if the_file is None:
             loaded_mat = scipy.io.loadmat(
-                '../filer_Henriette/GeomSPID_correct.mat')
+                'filer/GeomSPID_correct.mat')
         else:
             loaded_mat = scipy.io.loadmat(the_file)
         return loaded_mat
@@ -44,7 +44,7 @@ class FindFiles:
             dict -- a dict with the parameter name and explanation
         """
         header = []
-        for line in open('../filer_Henriette/flow_55.DAT', 'r'):
+        for line in open('filer/flow_SPID_55.DAT', 'r'):
             my_list = line.split()[2].split()[0].split(',')
             for items in range(len(my_list)):
                 get_values = list(
@@ -279,7 +279,7 @@ class FindFiles:
         for i, alt in enumerate(unique_altitudes):
             print(f'Looking for files' + '.' * (i + 1), end='\r')
             if the_file is None:
-                f = np.genfromtxt('../filer_Henriette/flow_' + str(alt) + '.DAT',
+                f = np.genfromtxt('filer/flow_SPID_' + str(alt) + '.DAT',
                                   skip_header=1, comments='Z')
             else:
                 f = np.genfromtxt(the_file,
@@ -343,7 +343,7 @@ class Plotter(FindFiles):
     def __init__(self):
         """Initialize the plotter object.
         """
-        self.files = self.load_mat(the_file='../filer_Henriette/hedin.mat')
+        self.files = self.load_mat(the_file='filer/hedin.mat')
         self.all_polygons = self.make_polygon(self.files, version='hedin')
 
         self.header, self.header_dict = self.make_header()
@@ -357,7 +357,7 @@ class Plotter(FindFiles):
             altitudes {list} -- a list containing the altitudes that the user specified
         """
         self.file_dict = self.make_files(
-            altitudes, the_file='../filer_Henriette/flow_Hedin_paper.DAT')
+            altitudes, the_file='filer/flow_Hedin_paper.DAT')
 
     def scatter_plots(self, n_plots, altitudes, indices, save=False):
         """Make one or more scatter plots from the specified data.
@@ -481,7 +481,7 @@ class Chooser(FindFiles):
 
     def reset(self):
         """Possible to run again after doing a run of the code.
-        
+
         Returns:
             bool -- True if the code should run again, False if not
         """

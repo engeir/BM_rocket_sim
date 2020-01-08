@@ -28,11 +28,11 @@ class BrownianAmbient(FindFiles):
             altitudes {int} -- the altitude that should be used
         """
         # Find the detector design.
-        mat_file = self.load_mat(the_file='../filer_Henriette/hedin.mat')
+        mat_file = self.load_mat(the_file='filer/hedin.mat')
         # Make a polygon of the design.
         self.all_polygons = self.make_polygon(mat_file, version='hedin')
         file_dict = self.make_files(
-            [altitudes], the_file='../filer_Henriette/flow_Hedin_paper.DAT')
+            [altitudes], the_file='filer/flow_Hedin_paper.DAT')
         # Find the correct .dat file.
         file = file_dict[altitudes]
         # Get the important parameters from the .dat file.

@@ -18,9 +18,9 @@ class ProbeDesign(FindFiles):
         FindFiles {class} -- class object holding methods for obtaining data
     """
     def __init__(self):
-        self.mat_file = self.load_mat(the_file='../filer_Henriette/hedin.mat')
+        self.mat_file = self.load_mat(the_file='filer/hedin.mat')
         self.header, self.header_dict = self.make_header()
-        self.file_dict = self.make_files([55], the_file='../filer_Henriette/flow_Hedin_paper.DAT')
+        self.file_dict = self.make_files([55], the_file='filer/flow_Hedin_paper.DAT')
         all_polygons = self.make_polygon(self.mat_file, version='hedin')
         self.patch = self.make_patches(all_polygons, 'k', False)
         files = self.file_dict[55]
@@ -47,7 +47,7 @@ class Finder:
 
         Also gives default values for saving, which files to use and which version.
         """
-        self.path = '../log_files'
+        self.path = 'log_files'
         if not os.path.isdir(self.path):
             print(f'No folder in directory {self.path}')
             exit()
@@ -75,6 +75,7 @@ class Finder:
             self.version = 'v_distribution'
 
     def saver(self):
+        os.makedirs(cf.SAVE_PATH, exist_ok=True)
         self.save = input('Do you want to save the figure? (y or n)\t').lower()
 
     def choose_file(self, latest=False):
