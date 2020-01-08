@@ -1,4 +1,4 @@
-"""Constant values used throughout the hedin.py script.test
+"""Constant values used throughout the hedin.py script.
 """
 from datetime import datetime
 import numpy as np
