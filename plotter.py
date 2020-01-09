@@ -5,7 +5,6 @@ import glob
 import ast
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy.signal as sig
 
 import config as cf
 from main import FindFiles
@@ -18,16 +17,20 @@ class ProbeDesign(FindFiles):
         FindFiles {class} -- class object holding methods for obtaining data
     """
     def __init__(self):
-        self.mat_file = self.load_mat(the_file='filer/hedin.mat')
+        self.mat_file = self.load_mat()
+        # self.mat_file = self.load_mat(the_file='filer/hedin.mat')
         self.header, self.header_dict = self.make_header()
-        self.file_dict = self.make_files([55], the_file='filer/flow_Hedin_paper.DAT')
-        all_polygons = self.make_polygon(self.mat_file, version='hedin')
+        self.file_dict = self.make_files([55], the_file='filer/flow_SPID_55.DAT')
+        # self.file_dict = self.make_files([55], the_file='filer/flow_Hedin_paper.DAT')
+        all_polygons = self.make_polygon(self.mat_file)
+        # all_polygons = self.make_polygon(self.mat_file, version='hedin')
         self.patch = self.make_patches(all_polygons, 'k', False)
         files = self.file_dict[55]
         x, y = files[:, 0], files[:, 1]
         xi = np.arange(min(x), max(x), 0.0001)
         yi = np.arange(min(y), max(y), 0.0001)
-        self.x_lim, self.y_lim = (min(x), max(x)), (min(y), max(y))
+        self.x_lim, self.y_lim = (min(x), 0), (min(y), max(y))
+        # self.x_lim, self.y_lim = (min(x), max(x)), (min(y), max(y))
         self.xi, self.yi = np.meshgrid(xi, yi)
 
     def draw(self):
@@ -35,7 +38,8 @@ class ProbeDesign(FindFiles):
         """
         _, ax = plt.subplots(figsize=(7, 5))
         ax.add_collection(self.patch)
-        plt.xlim(self.x_lim[0] + .06, self.x_lim[1])
+        plt.xlim(self.x_lim[0], self.x_lim[1])
+        # plt.xlim(self.x_lim[0] + .06, self.x_lim[1])
         plt.ylim(self.y_lim[0], self.y_lim[1])
 
 
@@ -49,7 +53,7 @@ class Finder:
         """
         self.path = 'log_files'
         if not os.path.isdir(self.path):
-            print(f'No folder in directory {self.path}')
+            print(f'No folder in directory {self.path}.')
             exit()
         self.save = 'n'
         self.the_files = ''
@@ -82,7 +86,7 @@ class Finder:
         """Choose which log files to use for plotting.
 
         The complete file name as a string is not needed, just enough so the
-        given string can be found somwhere in one of the files' name.
+        given string can be found somewhere in one of the files' name.
 
         Keyword Arguments:
             latest {bool} -- if True, the latest simulation log files are used (default: {False})

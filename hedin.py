@@ -28,11 +28,15 @@ class BrownianAmbient(FindFiles):
             altitudes {int} -- the altitude that should be used
         """
         # Find the detector design.
-        mat_file = self.load_mat(the_file='filer/hedin.mat')
+        mat_file = self.load_mat()
+        # mat_file = self.load_mat(the_file='filer/hedin.mat')
         # Make a polygon of the design.
-        self.all_polygons = self.make_polygon(mat_file, version='hedin')
+        self.all_polygons = self.make_polygon(mat_file)
+        # self.all_polygons = self.make_polygon(mat_file, version='hedin')
         file_dict = self.make_files(
-            [altitudes], the_file='filer/flow_Hedin_paper.DAT')
+            [altitudes], the_file='filer/flow_SPID_55.DAT')
+        # file_dict = self.make_files(
+        #     [altitudes], the_file='filer/flow_Hedin_paper.DAT')
         # Find the correct .dat file.
         file = file_dict[altitudes]
         # Get the important parameters from the .dat file.
@@ -83,7 +87,8 @@ class BrownianAmbient(FindFiles):
         Returns:
             list -- two lists containing lists with position, velocity and mean free path
         """
-        p = BrownianParticle(self.x_lim[0] + 0.07, y)
+        p = BrownianParticle(self.x_lim[0], y)
+        # p = BrownianParticle(self.x_lim[0] + 0.07, y)
         # Check the time when the particle is created, and trace it for no more than 't' seconds.
         t0 = time.clock()
         t = cf.TIMEOUTERROR
