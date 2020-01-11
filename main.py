@@ -241,7 +241,7 @@ class FindFiles:
             if poly.shape[1] != 2:
                 poly = poly.T
             p = matplotlib.path.Path(poly)
-            if p.contains_points([[xi, yi]])[0]:
+            if p.contains_point([xi, yi]):
                 return True, False
         return False, False
         # # Upper side

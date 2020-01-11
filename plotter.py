@@ -294,7 +294,7 @@ if __name__ == '__main__':
     c = ProbeDesign()
     find.choose_version()
     find.saver()
-    find.choose_file(latest=False)
+    find.choose_file(latest=True)
     os.system('cls' if os.name == 'nt' else 'clear')
     find.print_info()
     pos, vel, vel_d, m_mfp = find.convert_files()
