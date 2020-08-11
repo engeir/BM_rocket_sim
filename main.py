@@ -236,32 +236,41 @@ class FindFiles:
             bool -- True if the particle has crashed, False if it has not.
             bool -- True if the particle hit the detector, False if it did not.
         """
-        # Upper side
-        mask1 = (xi > all_polygons[0][0, 0]) & (xi < all_polygons[0][0, 4]) & \
-            (yi < all_polygons[0][1, 1]) & (yi > all_polygons[0][1, 0])
-        if mask1:
-            return True, False
-        # Upper back end
-        mask2 = (xi > all_polygons[0][0, 2]) & (xi < all_polygons[0][0, 4]) & \
-            (yi > all_polygons[0][1, 2]) & (yi < all_polygons[0][1, 4])
-        if mask2:
-            return True, False
-        # Detection plate
-        mask3 = (xi > all_polygons[0][0, 11]) & (xi < all_polygons[0][0, 4]) & \
-            (yi > all_polygons[0][1, 10]) & (yi < all_polygons[0][1, 11])
-        if mask3:
-            return True, True
-        # Lower side
-        mask4 = (xi > all_polygons[0][0, 8]) & (xi < all_polygons[0][0, 4]) & \
-            (yi > all_polygons[0][1, 8]) & (yi < all_polygons[0][1, 9])
-        if mask4:
-            return True, False
-        # Lower back end
-        mask5 = (xi > all_polygons[0][0, 6]) & (xi < all_polygons[0][0, 4]) & \
-            (yi > all_polygons[0][1, 6]) & (yi < all_polygons[0][1, 7])
-        if mask5:
-            return True, False
+        # TODO: make it able to check collisions with the detector plate in a general way
+        # (i.e. rewrite all from below, detector plate part is missing)
+        for poly in all_polygons:
+            if poly.shape[1] != 2:
+                poly = poly.T
+            p = matplotlib.path.Path(poly)
+            if p.contains_point([xi, yi]):
+                return True, False
         return False, False
+        # # Upper side
+        # mask1 = (xi > all_polygons[0][0, 0]) & (xi < all_polygons[0][0, 4]) & \
+        #     (yi < all_polygons[0][1, 1]) & (yi > all_polygons[0][1, 0])
+        # if mask1:
+        #     return True, False
+        # # Upper back end
+        # mask2 = (xi > all_polygons[0][0, 2]) & (xi < all_polygons[0][0, 4]) & \
+        #     (yi > all_polygons[0][1, 2]) & (yi < all_polygons[0][1, 4])
+        # if mask2:
+        #     return True, False
+        # # Detection plate
+        # mask3 = (xi > all_polygons[0][0, 11]) & (xi < all_polygons[0][0, 4]) & \
+        #     (yi > all_polygons[0][1, 10]) & (yi < all_polygons[0][1, 11])
+        # if mask3:
+        #     return True, True
+        # # Lower side
+        # mask4 = (xi > all_polygons[0][0, 8]) & (xi < all_polygons[0][0, 4]) & \
+        #     (yi > all_polygons[0][1, 8]) & (yi < all_polygons[0][1, 9])
+        # if mask4:
+        #     return True, False
+        # # Lower back end
+        # mask5 = (xi > all_polygons[0][0, 6]) & (xi < all_polygons[0][0, 4]) & \
+        #     (yi > all_polygons[0][1, 6]) & (yi < all_polygons[0][1, 7])
+        # if mask5:
+        #     return True, False
+        # return False, False
 
     @staticmethod
     def make_files(altitudes, the_file=None):

@@ -29,4 +29,4 @@ DATE = date + '_r' + str(DUST_RADIUS).replace('.', '_') + '_'
 DT = 1e-8
 TIMEOUTERROR = 18.0  # How long particles are allowed to live until termination
 Y_DOMAIN = 0.04  # How wide spread the dust particles are
-N = 21  # Number of test particles
+N = 3  # Number of test particles
