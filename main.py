@@ -237,6 +237,7 @@ class FindFiles:
             bool -- True if the particle hit the detector, False if it did not.
         """
         # TODO: make it able to check collisions with the detector plate in a general way
+        # (i.e. rewrite all from below, detector plate part is missing)
         for poly in all_polygons:
             if poly.shape[1] != 2:
                 poly = poly.T
